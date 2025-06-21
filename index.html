@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Генератор Сайтов</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    textarea { width: 100%; height: 100px; margin-bottom: 10px; }
+    iframe { width: 100%; height: 500px; border: 1px solid #ccc; }
+    button { padding: 10px 20px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🌐 AI Генератор Сайтов</h1>
+  <textarea id="prompt" placeholder="Пример: сайт портфолио разработчика с тёмной темой..."></textarea>
+  <br>
+  <button onclick="generate()">Сгенерировать сайт</button>
+  <br><br>
+  <iframe id="preview"></iframe>
+
+  <script>
+    async function generate() {
+      const prompt = document.getElementById("prompt").value;
+      const res = await fetch('/api/generate-site', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await res.json();
+      document.getElementById("preview").srcdoc = data.html;
+    }
+  </script>
+</body>
+</html>
